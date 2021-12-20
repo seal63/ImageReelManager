@@ -1,7 +1,10 @@
 .imagen {
   max-height: 100%;
 }
-
+.header {
+  position: absolute;
+  z-index: 5
+}
 .divImagen{
     height: 100vh;
 }

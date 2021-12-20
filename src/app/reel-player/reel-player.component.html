@@ -1,5 +1,7 @@
-
-<button mat-raised-button color="primary"
+<div *ngIf="started" class="header">
+  {{remainingTime}}
+</div>
+<button *ngIf="!started" mat-raised-button color="primary"
         (click)="start()">
   Start
 </button>
