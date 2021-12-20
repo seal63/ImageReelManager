@@ -1,0 +1,24 @@
+#fileSelect {
+  display: none;
+}
+
+.table-image {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.example-button-row {
+  display: flex;
+  width: 490px;
+  padding: 10px;
+}
+
+.button-normal{
+    padding: 10px;
+}
+
+.divider {
+  width: 5px;
+  height: auto;
+  display: inline-block;
+}

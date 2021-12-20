@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\menu",
+    "\\src\\app\\reel-create",
+    "\\src\\app\\reel-player"
+  ],
+  "SelectedNode": "\\src\\app\\reel-player\\reel-player.component.ts",
+  "PreviewInSolutionExplorer": false
+}
