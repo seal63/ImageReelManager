@@ -17,23 +17,27 @@ interface FileObject {
 })
 export class ReelCreateComponent implements OnInit {
 
-  constructor(private sanitizer: DomSanitizer,
-    private reelManagerService: ReelManagerService,
-    private router: Router
-  ) {
-    this.preparedReel = false;
-  }
   datosReel: DataReel[] = [];
   images: any = [];
   fileObjects: FileObject[] = [];
   files: File[] = [];
+  preparedReel: boolean = false;
 
-  preparedReel: boolean;
+  constructor(private sanitizer: DomSanitizer,
+    private reelManagerService: ReelManagerService,
+    private router: Router
+  ) { }
+ 
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    let datos = this.reelManagerService.getReelData()
+    //If we come back from reel-player
+    if (datos != null) {
+      this.preparedReel = true;
+    }
+  }
 
   startReel() {
-    console.log(this.images);
     this.reelManagerService.setReelData(this.datosReel);
     this.router.navigate(["/reel-player"]);
   }
@@ -79,36 +83,31 @@ export class ReelCreateComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
     this.files = event.target.files;
 
-    //Si existe el archivo
-    if (file) {
-      const formData = new FormData();
-      
-
-      formData.append("thumbnail", file);
-
-      //Generates an url per file and adds it to each source in the html
+    if (event.target.files[0]) {
       var files = event.target.files;
-      for (var i = 0; i < files.length; i++) {
-        var stringUrl = URL.createObjectURL(files[i]);
-        var url = this.sanitize(stringUrl)
-        this.images[i] = url;
-
-        
-        var sanitizedUrl = <string>this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.bypassSecurityTrustHtml(stringUrl));
-        
-        let f: FileObject = {
-          url: sanitizedUrl,
-          file: i
-        }
-        this.fileObjects.push(f);
-      }
+      this.generateFileUrls(files);
     }
   }
 
-  
+  generateFileUrls(files: any){
+  for (var i = 0; i < files.length; i++) {
+    var stringUrl = URL.createObjectURL(files[i]);
+    var url = this.sanitize(stringUrl)
+    this.images[i] = url;
+
+
+    var sanitizedUrl = <string>this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.bypassSecurityTrustHtml(stringUrl));
+
+    let f: FileObject = {
+      url: sanitizedUrl,
+      file: i
+    }
+    this.fileObjects.push(f);
+  }
+  }
+
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
