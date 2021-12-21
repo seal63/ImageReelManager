@@ -16,7 +16,8 @@ createWindow = () => {
     appWin.loadURL(`file://${__dirname}/dist/index.html`);
 
     appWin.setMenu(null);
-    appWin.setResizable(true);
+
+  appWin.setResizable(true);
     appWin.on("closed", () => {
         appWin = null;
     });

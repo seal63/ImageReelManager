@@ -1,9 +1,12 @@
 <div *ngIf="started" class="header">
-  {{remainingTime}}
+  <button class="timer-button">
+    {{remainingTime}}
+  </button>
+  
 </div>
 <button *ngIf="!started" mat-raised-button color="primary"
         (click)="start()">
-  Start
+  Start Session
 </button>
 
 <div class="divImagen">

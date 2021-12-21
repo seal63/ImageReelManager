@@ -40,6 +40,7 @@ npm-debug.log
 yarn-error.log
 testem.log
 /typings
+/image-reel-app-win32-x64
 
 # System Files
 .DS_Store
