@@ -6,7 +6,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs';
 import { interval } from 'rxjs';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reel-player',
@@ -17,7 +17,8 @@ export class ReelPlayerComponent implements OnInit {
 
   constructor(private _route: ActivatedRoute,
     private reelManagerService: ReelManagerService,
-    private sanitizer: DomSanitizer,) {
+    private sanitizer: DomSanitizer,
+    private router: Router) {
 
   }
   started: boolean = false;
@@ -56,9 +57,13 @@ export class ReelPlayerComponent implements OnInit {
     this.remainingTime = this.remainingTime - 1;
   }
   nextImage() {
+    
     this.subscription.unsubscribe();
     this.timerSubscription.unsubscribe();
     this.numeroImagenActual++;
+    if (this.reelData.length == this.numeroImagenActual) {
+      this.router.navigate(["/reel-create"]);
+    }
 
     this.imagenActual = this.sanitize(URL.createObjectURL(this.reelData[this.numeroImagenActual].archivo));
     const source = interval(<number>this.reelData[this.numeroImagenActual].segundosImagen * 1000);
