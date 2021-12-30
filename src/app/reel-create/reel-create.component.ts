@@ -36,7 +36,7 @@ export class ReelCreateComponent implements OnInit {
     let datos = this.reelManagerService.getReelData()
     //If we come back from reel-player
     if (datos != null) {
-      this.preparedReel = true;
+      if(datos[0] != null) this.preparedReel = true;
       for (var i = 0; datos.length < i; i++) {
         this.files[i] = datos[i].archivo;
       }
