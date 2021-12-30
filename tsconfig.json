@@ -12,8 +12,12 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
+
     "types": [
-      "index.d.ts"
+      "index.d.ts",
+      "$",
+      "Symbol",
+      "jQuery"
     ],
     "downlevelIteration": true,
     "experimentalDecorators": true,

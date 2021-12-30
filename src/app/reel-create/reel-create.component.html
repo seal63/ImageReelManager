@@ -24,8 +24,7 @@
   <button type="button" class="btn btn-secondary" *ngFor="let image of images; let i = index;">
     <img class="table-image" [src]="image" [attr.id]="i" />
     <br />
-    <input placeholder="seconds" type="text" [attr.id]="'input' +i" />
+    <input (focus)="onfocus()" placeholder="seconds" type="text" [attr.id]="'input' +i" />
   </button>
 
 </div>
-

@@ -4,9 +4,12 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { DataReel} from '../data-reel';
 import { ReelManagerService } from '../reel-manager.service';
 import { Router } from '@angular/router';
+import * as $ from 'jquery';
+
 interface FileObject {
   url: string;
   file: number;
+  archivo: File;
 }
 
 
@@ -34,7 +37,18 @@ export class ReelCreateComponent implements OnInit {
     //If we come back from reel-player
     if (datos != null) {
       this.preparedReel = true;
+      for (var i = 0; datos.length < i; i++) {
+        this.files[i] = datos[i].archivo;
+      }
+      this.generateFileUrls(this.files);
     }
+   
+  }
+
+  onfocus() {
+    console.log("di");
+    $('#btn btn - secondary sortable - chosen').css('draggable', 'false');
+   
   }
 
   startReel() {
@@ -44,16 +58,19 @@ export class ReelCreateComponent implements OnInit {
   
   saveReel() {
     this.inicializaDatosReel();
+    console.log(this.datosReel);
     var datosEnviar = [];
 
-    for (var i = 0; i < this.files.length; i++) {
+    for (var i = 0; i < this.fileObjects.length; i++) {
       var elementoImagen = <HTMLImageElement>document.getElementById(i.toString());
       var elementoImagenUrl = elementoImagen.src;
 
       var fileNumber = 0;
+      var archivo = this.files[0];
       this.fileObjects.forEach((f) => {
         if (f.url == elementoImagenUrl) {
           fileNumber = f.file;
+          archivo = f.archivo;
         } 
       });
 
@@ -61,17 +78,19 @@ export class ReelCreateComponent implements OnInit {
       var segundosImagen = parseInt(input.value);
 
       var data ={
-        archivo: this.files[i],
+        archivo: archivo,
         segundosImagen: segundosImagen,
         orden: fileNumber,
       }
-      this.datosReel.splice(fileNumber, 0, data);
+      this.datosReel.splice(i, 1, data);
     }
     if (this.datosReel.length >= 1) this.preparedReel = true;
     }
 
   inicializaDatosReel() {
-    for (var i = 0; i < this.files.length; i++) {
+    console.log(this.fileObjects.length);
+    this.datosReel = [];
+    for (var i = 0; i < this.fileObjects.length; i++) {
       var file = new File(new Array<Blob>(), "Mock.zip", { type: 'application/zip' });
 
       this.datosReel[i] = {
@@ -84,27 +103,30 @@ export class ReelCreateComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.files = event.target.files;
-
+    console.log(event.target.files);
     if (event.target.files[0]) {
       var files = event.target.files;
       this.generateFileUrls(files);
     }
   }
 
-  generateFileUrls(files: any){
+  generateFileUrls(files: any) {
+    var number = this.images.length;
   for (var i = 0; i < files.length; i++) {
     var stringUrl = URL.createObjectURL(files[i]);
     var url = this.sanitize(stringUrl)
-    this.images[i] = url;
+    this.images[number] = url;
 
 
     var sanitizedUrl = <string>this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.bypassSecurityTrustHtml(stringUrl));
 
     let f: FileObject = {
       url: sanitizedUrl,
-      file: i
+      file: this.fileObjects.length,
+      archivo: files[i]
     }
     this.fileObjects.push(f);
+    number++;
   }
   }
 

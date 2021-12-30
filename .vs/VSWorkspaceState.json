@@ -3,10 +3,8 @@
     "",
     "\\src",
     "\\src\\app",
-    "\\src\\app\\menu",
-    "\\src\\app\\reel-create",
-    "\\src\\app\\reel-player"
+    "\\src\\app\\reel-create"
   ],
-  "SelectedNode": "\\main.js",
+  "SelectedNode": "\\src\\app\\reel-create\\reel-create.component.ts",
   "PreviewInSolutionExplorer": false
 }
