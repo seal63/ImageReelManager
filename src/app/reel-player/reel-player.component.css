@@ -1,5 +1,7 @@
 .imagen {
   max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 .header {
   position: absolute;
@@ -15,8 +17,11 @@
   color: white;
   font-size: 2vh;
   border: none;
+  z-index: 5;
 }
 
 .divImagen {
   height: 100vh;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }

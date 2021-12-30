@@ -2,10 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\src",
+    "\\src-tauri",
+    "\\src-tauri\\src",
     "\\src\\app",
     "\\src\\app\\menu",
-    "\\src\\app\\reel-create"
+    "\\src\\app\\reel-create",
+    "\\src\\app\\reel-player"
   ],
-  "SelectedNode": "\\src\\app\\reel-manager.service.ts",
+  "SelectedNode": "\\src\\app\\reel-player\\reel-player.component.css",
   "PreviewInSolutionExplorer": false
 }
