@@ -44,13 +44,15 @@ export class ReelCreateComponent implements OnInit {
     }
    
   }
-
-  onfocus() {
-    console.log("di");
-    $('#btn btn - secondary sortable - chosen').css('draggable', 'false');
-   
+  clearReel() {
+    this.preparedReel = false;
+    this.files = [];
+    this.fileObjects = [];
+    this.images = [];
+    this.datosReel = [];
   }
 
+  
   startReel() {
     this.reelManagerService.setReelData(this.datosReel);
     this.router.navigate(["/reel-player"]);
@@ -85,7 +87,7 @@ export class ReelCreateComponent implements OnInit {
       this.datosReel.splice(i, 1, data);
     }
     if (this.datosReel.length >= 1) this.preparedReel = true;
-    }
+  }
 
   inicializaDatosReel() {
     console.log(this.fileObjects.length);
@@ -110,6 +112,7 @@ export class ReelCreateComponent implements OnInit {
     }
   }
 
+  //Generates an url per file and stores them in this.fileObjects
   generateFileUrls(files: any) {
     var number = this.images.length;
   for (var i = 0; i < files.length; i++) {

@@ -3,6 +3,12 @@
           (click)="fileSelect.click()">
     Upload images
   </button>
+
+  <div class="divider"></div>
+  <button mat-icon-button (click)="clearReel()" color="primary">
+    <mat-icon>clear</mat-icon>
+  </button>
+
   <div class="divider"></div>
   <button mat-raised-button color="primary"
           (click)="saveReel()">
@@ -13,6 +19,11 @@
   <button mat-raised-button [disabled]="!preparedReel" color="primary" (click)="startReel()">
     Start reel
   </button>
+
+
+
+
+
 </div>
 
 <input accept="image/" #fileSelect type="file" style="display: none;" multiple
@@ -24,7 +35,7 @@
   <button type="button" class="btn btn-secondary" *ngFor="let image of images; let i = index;">
     <img class="table-image" [src]="image" [attr.id]="i" />
     <br />
-    <input (focus)="onfocus()" placeholder="seconds" type="text" [attr.id]="'input' +i" />
+    <input  placeholder="seconds" type="text" [attr.id]="'input' +i" />
   </button>
 
 </div>
