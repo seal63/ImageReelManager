@@ -3,8 +3,9 @@
     "",
     "\\src",
     "\\src\\app",
+    "\\src\\app\\menu",
     "\\src\\app\\reel-create"
   ],
-  "SelectedNode": "\\src\\app\\reel-create\\reel-create.component.ts",
+  "SelectedNode": "\\src\\app\\reel-manager.service.ts",
   "PreviewInSolutionExplorer": false
 }

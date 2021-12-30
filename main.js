@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require("electron");
 
 let appWin;
 
+/**
 createWindow = () => {
     appWin = new BrowserWindow({
         width: 800,
@@ -23,6 +24,7 @@ createWindow = () => {
     });
 }
 
+
 app.on("ready", createWindow);
 
 app.on("window-all-closed", () => {
@@ -30,3 +32,4 @@ app.on("window-all-closed", () => {
       app.quit();
     }
 });
+*/

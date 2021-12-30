@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "main": "main.js",
   "scripts": {
+    "tauri": "tauri",
     "ng": "ng",
     "start": "ng serve",
     "build": {
@@ -29,6 +30,7 @@
   },
   "private": true,
   "dependencies": {
+    "@tauri-apps/api": "^1.0.0-beta.8",
     "jquery": "^3.6.0"
   },
   "devDependencies": {
@@ -46,6 +48,7 @@
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
     "@reactivex/rxjs": "^6.6.7",
+    "@tauri-apps/cli": "^1.0.0-beta.10",
     "@types/jasmine": "~3.10.0",
     "@types/jquery": "^3.5.10",
     "@types/node": "^12.11.1",
