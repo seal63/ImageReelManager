@@ -44,7 +44,9 @@ export class ReelCreateComponent implements OnInit {
       this.images = data.images;
       this.preparedReel = data.preparedReel;
     }
-   
+    const source = <HTMLElement>document.getElementById('globalInput');
+    source.addEventListener('input', this.globalInput);
+
   }
   clearReel() {
     this.preparedReel = false;
@@ -148,11 +150,17 @@ export class ReelCreateComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }
 
-  globalInput(event: any) {
-  
-    for (var i = 0; i < this.images.length;  i++) {
+  globalInput(fileObjects: any) {
+    var globalInput = <HTMLInputElement>document.getElementById("globalInput");
+    var fin = false;
+    var i = 0;
+    while (!fin) {
       var input = <HTMLInputElement>document.getElementById("input" + i);
-      input.value = event.target.value;
+      if (input == null) {
+        return;
+      }
+      input.value = globalInput.value;
+      i++
     }
   }
 }
