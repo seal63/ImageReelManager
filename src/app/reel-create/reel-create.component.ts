@@ -33,14 +33,16 @@ export class ReelCreateComponent implements OnInit {
  
 
   ngOnInit(): void {
+    console.log("init");
     let datos = this.reelManagerService.getReelData()
     //If we come back from reel-player
     if (datos != null) {
-      if(datos[0] != null) this.preparedReel = true;
-      for (var i = 0; datos.length < i; i++) {
-        this.files[i] = datos[i].archivo;
-      }
-      this.generateFileUrls(this.files);
+      let data = this.reelManagerService.getSession();
+      this.datosReel = data.datosReel;
+      this.fileObjects = data.fileObjects;
+      this.files = data.files;
+      this.images = data.images;
+      this.preparedReel = data.preparedReel;
     }
    
   }
@@ -54,6 +56,16 @@ export class ReelCreateComponent implements OnInit {
 
   
   startReel() {
+    let data = {
+      datosReel: this.datosReel,
+      images: this.images,
+      fileObjects: this.fileObjects,
+      files: this.files,
+      preparedReel: this.preparedReel
+    }
+    
+
+    this.reelManagerService.saveSession(data)
     this.reelManagerService.setReelData(this.datosReel);
     this.router.navigate(["/reel-player"]);
   }
@@ -105,7 +117,6 @@ export class ReelCreateComponent implements OnInit {
 
   onFileSelected(event: any) {
     this.files = event.target.files;
-    console.log(event.target.files);
     if (event.target.files[0]) {
       var files = event.target.files;
       this.generateFileUrls(files);
@@ -115,7 +126,7 @@ export class ReelCreateComponent implements OnInit {
   //Generates an url per file and stores them in this.fileObjects
   generateFileUrls(files: any) {
     var number = this.images.length;
-  for (var i = 0; i < files.length; i++) {
+    for (var i = 0; i < files.length; i++) {
     var stringUrl = URL.createObjectURL(files[i]);
     var url = this.sanitize(stringUrl)
     this.images[number] = url;
@@ -135,5 +146,13 @@ export class ReelCreateComponent implements OnInit {
 
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  globalInput(event: any) {
+  
+    for (var i = 0; i < this.images.length;  i++) {
+      var input = <HTMLInputElement>document.getElementById("input" + i);
+      input.value = event.target.value;
+    }
   }
 }

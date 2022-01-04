@@ -2,26 +2,64 @@
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
+
 }
 .header {
   position: absolute;
   z-index: 5;
-  width: 4vh;
+  width: 20vh;
+  height: 5vh;
+  padding: 1vh;
+}
+
+.timer-header {
+  z-index: 5;
+  width: 600vh;
   height: 4vh;
   padding: 1vh;
+  margin-left: 4vh;
 }
 
 .timer-button {
   background-color: #3f51b5;
-  border-radius: 50%;
   color: white;
   font-size: 2vh;
   border: none;
   z-index: 5;
+}
+.example-button-row {
+  display: flex;
+  padding: 1vh;
+}
+
+.player-button {
+  background-color: #3f51b5;
+  color: white;
+  padding: 1vh;
+  border: none;
+  z-index: 5;
+  width: 3vh;
+  height: 3vh;
+  text-align: center;
+ 
+}
+.boton {
+  background-color: #3f51b5;
+  color: white;
+  padding: 0;
+}
+button:disabled {
+  opacity: 50%;
 }
 
 .divImagen {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: hidden;
+  text-align: center;
+}
+.divider {
+  width: 5px;
+  height: auto;
+  display: inline-block;
 }

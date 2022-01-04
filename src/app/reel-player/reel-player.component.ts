@@ -29,6 +29,10 @@ export class ReelPlayerComponent implements OnInit {
   timerSubscription!: any;
   observer!: Observable<number>;
   remainingTime: number = 0;
+  paused: boolean = false;
+
+  icon: string = "pause";
+
   ngOnInit(): void {
     this.reelData = this.reelManagerService.getReelData();
     this.imagenActual = this.sanitize(URL.createObjectURL(this.reelData[0].archivo));
@@ -49,13 +53,39 @@ export class ReelPlayerComponent implements OnInit {
     this.started = true;
     const source = interval(<number>this.reelData[0].segundosImagen * 1000);
     this.remainingTime = <number>this.reelData[0].segundosImagen;
-    const sourceSecond = interval(1000);
-    this.timerSubscription = sourceSecond.subscribe(val => this.decreaseSecond())
+    this.startTimer();
     this.subscription = source.subscribe(val => this.nextImage());
   }
   decreaseSecond() {
     this.remainingTime = this.remainingTime - 1;
   }
+
+  startTimer() {
+    const sourceSecond = interval(1000);
+    this.timerSubscription = sourceSecond.subscribe(val => this.decreaseSecond())
+  }
+
+  playButton() {
+    if (this.paused) {
+      this.resume();
+      this.icon = "pause"
+    } else {
+      this.pause();
+      this.icon = "play_arrow"
+    }
+  }
+  pause() {
+    this.paused = true;
+    this.timerSubscription.unsubscribe();
+    this.subscription.unsubscribe();
+  }
+  resume() {
+    this.paused = false;
+    const source = interval(this.remainingTime * 1000);
+    this.subscription = source.subscribe(val => this.nextImage());
+    this.startTimer();
+  }
+
   nextImage() {
     
     this.subscription.unsubscribe();

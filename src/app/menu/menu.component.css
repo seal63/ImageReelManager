@@ -10,8 +10,7 @@ section {
 
 .example-button-row {
   display: flex;
-  width: 490px;
-  padding: 10px;
+  padding: 1vh;
 }
 
 .divider {
