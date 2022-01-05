@@ -74,6 +74,9 @@ export class ReelPlayerComponent implements OnInit {
       this.icon = "play_arrow"
     }
   }
+  next(){
+  this.nextImage();
+  }
   pause() {
     this.paused = true;
     this.timerSubscription.unsubscribe();
@@ -93,6 +96,7 @@ export class ReelPlayerComponent implements OnInit {
     this.numeroImagenActual++;
     if (this.reelData.length == this.numeroImagenActual) {
       this.router.navigate(["/reel-create"]);
+      return;
     }
 
     this.imagenActual = this.sanitize(URL.createObjectURL(this.reelData[this.numeroImagenActual].archivo));

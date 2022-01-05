@@ -9,7 +9,7 @@ fn main() {
       "Rust".to_string(),
       tauri::WindowUrl::App("index.html".into()),
       |window_builder, webview_attributes| {
-        (window_builder.title("Tauri"), webview_attributes.disable_file_drop_handler())
+        (window_builder.title("Reel-Manager"), webview_attributes.disable_file_drop_handler())
       },
     )
     .run(tauri::generate_context!())

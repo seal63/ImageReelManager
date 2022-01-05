@@ -5,6 +5,8 @@ import { DataReel} from '../data-reel';
 import { ReelManagerService } from '../reel-manager.service';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
+import { Observable } from 'rxjs';
+import { interval } from 'rxjs';
 
 interface FileObject {
   url: string;
@@ -33,7 +35,6 @@ export class ReelCreateComponent implements OnInit {
  
 
   ngOnInit(): void {
-    console.log("init");
     let datos = this.reelManagerService.getReelData()
     //If we come back from reel-player
     if (datos != null) {
@@ -43,11 +44,30 @@ export class ReelCreateComponent implements OnInit {
       this.files = data.files;
       this.images = data.images;
       this.preparedReel = data.preparedReel;
-    }
-    const source = <HTMLElement>document.getElementById('globalInput');
-    source.addEventListener('input', this.globalInput);
 
+      let subscription: any;
+      const sourceSecond = interval(0);
+      subscription = sourceSecond.subscribe(val => this.restoreSession(subscription));
+     
+    }
   }
+  restoreSession(subscription: any) {
+     subscription.unsubscribe();
+      for (var i = 0; i < this.datosReel.length; i++) {
+        var fileNumber = 0;
+        var archivo = this.files[0];
+        this.datosReel.forEach((f) => {
+          if (f.orden == i) {
+            var input = <HTMLInputElement>document.getElementById("input" + i.toString());
+            input.value = f.segundosImagen.toString();
+          }
+        });
+
+      }
+      const source = <HTMLElement>document.getElementById('globalInput');
+      source.addEventListener('input', this.globalInput);
+    }
+   
   clearReel() {
     this.preparedReel = false;
     this.files = [];
@@ -58,6 +78,7 @@ export class ReelCreateComponent implements OnInit {
 
   
   startReel() {
+
     let data = {
       datosReel: this.datosReel,
       images: this.images,
@@ -74,7 +95,6 @@ export class ReelCreateComponent implements OnInit {
   
   saveReel() {
     this.inicializaDatosReel();
-    console.log(this.datosReel);
     var datosEnviar = [];
 
     for (var i = 0; i < this.fileObjects.length; i++) {
@@ -104,7 +124,6 @@ export class ReelCreateComponent implements OnInit {
   }
 
   inicializaDatosReel() {
-    console.log(this.fileObjects.length);
     this.datosReel = [];
     for (var i = 0; i < this.fileObjects.length; i++) {
       var file = new File(new Array<Blob>(), "Mock.zip", { type: 'application/zip' });

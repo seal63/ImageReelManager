@@ -6,7 +6,9 @@
     <button class="boton" (click)="playButton()" color="primary">
       <mat-icon [inline]="true">{{icon}}</mat-icon>
     </button>
-
+    <button class="boton" [disabled]="paused"(click)="next()" color="primary">
+      <mat-icon [inline]="true">skip_next</mat-icon>
+    </button>
 
 </span>
 
