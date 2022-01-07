@@ -121,6 +121,8 @@ export class ReelCreateComponent implements OnInit {
       this.datosReel.splice(i, 1, data);
     }
     if (this.datosReel.length >= 1) this.preparedReel = true;
+
+    this.startReel()
   }
 
   inicializaDatosReel() {
