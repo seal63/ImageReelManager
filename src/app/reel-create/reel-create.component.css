@@ -6,10 +6,15 @@
   max-width: 20vh;
   max-height: 20vh;
 }
-.normal{
-
+.normal{ 
+}
+.active {
+  opacity: 30%;
 }
 
+.unactive{
+
+}
 .error{
    border-color: red;
 }

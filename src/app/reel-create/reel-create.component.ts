@@ -243,4 +243,14 @@ export class ReelCreateComponent implements OnInit {
     }
     
   }
+
+  isRandom() {
+    if (this.randomizeButton === 'primary') {
+      return true;
+    }
+    else {
+      return false;
+    }
+
+  }
 }

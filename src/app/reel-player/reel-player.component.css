@@ -26,6 +26,7 @@
   font-size: 2vh;
   border: none;
   z-index: 5;
+  vertical-align: top;
 }
 .example-button-row {
   display: flex;
@@ -48,6 +49,7 @@
   color: white;
   padding: 0;
   border: 0;
+  vertical-align: top;
 }
 button:disabled {
   opacity: 50%;
