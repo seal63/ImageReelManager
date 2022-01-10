@@ -29,7 +29,7 @@ export class ReelCreateComponent implements OnInit {
   files: File[] = [];
   preparedReel: boolean = false;
 
-  buttonColor: ThemePalette;
+  randomizeButton: ThemePalette;
   error: boolean = false;
   constructor(private sanitizer: DomSanitizer,
     private reelManagerService: ReelManagerService,
@@ -81,6 +81,9 @@ export class ReelCreateComponent implements OnInit {
 
 
   formFilled(): boolean {
+    if (this.fileObjects.length == 0) {
+      return false;
+    }
     for (var i = 0; i < this.fileObjects.length; i++) {
       var input = <HTMLInputElement>document.getElementById("input" + i);
       if (input.value == "") {
@@ -110,9 +113,26 @@ export class ReelCreateComponent implements OnInit {
 
     this.reelManagerService.saveSession(data)
     this.reelManagerService.setReelData(this.datosReel);
+
+    if (this.randomizeButton == "primary") {
+      this.randomizeReel();
+    }
     this.router.navigate(["/reel-player"]);
   }
-  
+  randomizeReel() {
+    var l = this.datosReel.length;
+    var iterations = 100;
+    for (var i = 0; i < iterations; i++) {
+      var randomPosition = Math.floor(Math.random() * (l-1));
+      var saved = this.datosReel[l-1];
+      var moved = this.datosReel[randomPosition];
+      moved.orden = l-1;
+      this.datosReel[l-1] = moved;
+      saved.orden = randomPosition;
+      this.datosReel[randomPosition] = saved;
+    }
+  }
+
   saveReel() {
     this.inicializaDatosReel();
     var datosEnviar = [];
@@ -208,11 +228,11 @@ export class ReelCreateComponent implements OnInit {
   }
 
   randomize() {
-    if (this.buttonColor === 'primary') {
-      this.buttonColor = undefined;
+    if (this.randomizeButton === 'primary') {
+      this.randomizeButton = undefined;
     }
     else {
-      this.buttonColor = 'primary';
+      this.randomizeButton = 'primary';
     }
     
   }
