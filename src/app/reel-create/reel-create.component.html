@@ -16,6 +16,10 @@
   </button>
 
   <input type="text" class="globalInput" id="globalInput" placeholder="global time" />
+
+  <button mat-icon-button [color]="buttonColor"(click)="randomize()">
+  <mat-icon>shuffle</mat-icon>
+  </button>
 </div>
 
 <input accept="image/" #fileSelect type="file" style="display: none;" multiple
@@ -28,7 +32,7 @@
   <button type="button" class="btn btn-secondary" *ngFor="let image of images; let i = index;">
     <img class="table-image" [src]="image" [attr.id]="i" />
     <br />
-    <input class="input1" placeholder="seconds" type="text" [attr.id]="'input' +i" />
+    <input [ngClass]="!error ? 'normal' : 'error'" class="input1" placeholder="seconds" type="text" [attr.id]="'input' +i" />
   </button>
 
 </div>

@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import * as $ from 'jquery';
 import { Observable } from 'rxjs';
 import { interval } from 'rxjs';
+import { ThemePalette } from '@angular/material/core';
 
 interface FileObject {
   url: string;
@@ -28,6 +29,8 @@ export class ReelCreateComponent implements OnInit {
   files: File[] = [];
   preparedReel: boolean = false;
 
+  buttonColor: ThemePalette;
+  error: boolean = false;
   constructor(private sanitizer: DomSanitizer,
     private reelManagerService: ReelManagerService,
     private router: Router
@@ -76,9 +79,26 @@ export class ReelCreateComponent implements OnInit {
     this.datosReel = [];
   }
 
-  
+
+  formFilled(): boolean {
+    for (var i = 0; i < this.fileObjects.length; i++) {
+      var input = <HTMLInputElement>document.getElementById("input" + i);
+      if (input.value == "") {
+        this.error = true;
+        return false;
+       
+      }
+    }
+    this.error = false;
+    return true;
+}
+
   startReel() {
 
+    //checks if the time input is not null
+    if (!this.formFilled()) {
+      return;
+    }
     let data = {
       datosReel: this.datosReel,
       images: this.images,
@@ -96,6 +116,8 @@ export class ReelCreateComponent implements OnInit {
   saveReel() {
     this.inicializaDatosReel();
     var datosEnviar = [];
+
+
 
     for (var i = 0; i < this.fileObjects.length; i++) {
       var elementoImagen = <HTMLImageElement>document.getElementById(i.toString());
@@ -183,5 +205,15 @@ export class ReelCreateComponent implements OnInit {
       input.value = globalInput.value;
       i++
     }
+  }
+
+  randomize() {
+    if (this.buttonColor === 'primary') {
+      this.buttonColor = undefined;
+    }
+    else {
+      this.buttonColor = 'primary';
+    }
+    
   }
 }

@@ -6,7 +6,13 @@
   max-width: 20vh;
   max-height: 20vh;
 }
+.normal{
 
+}
+
+.error{
+   border-color: red;
+}
 .input1{
     max-width: 20vh;
 }
