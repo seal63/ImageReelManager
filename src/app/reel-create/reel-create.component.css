@@ -24,10 +24,10 @@
   padding: 1vh;
 }
 
-.button-normal{
-    padding: 10px;
+.mat-icon-button {
+  height: 36px !important;
+  line-height: 0.7;
 }
-
 .divider {
   width: 5px;
   height: auto;
