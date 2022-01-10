@@ -180,6 +180,13 @@ export class ReelCreateComponent implements OnInit {
     }
   }
 
+  onFolderSelected(event: any) {
+    this.files = event.target.files;
+    if (event.target.files[0]) {
+      var files = event.target.files;
+      this.generateFileUrls(files);
+    }
+  }
   onFileSelected(event: any) {
     this.files = event.target.files;
     if (event.target.files[0]) {
