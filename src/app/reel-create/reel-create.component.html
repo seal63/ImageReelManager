@@ -35,10 +35,10 @@
 
 
 <div class="btn-group ml-3" [sortablejs]="images">
-  <button type="button" class="btn btn-secondary" *ngFor="let image of images; let i = index;">
+  <button tabindex="-1" type="button" class="btn btn-secondary" *ngFor="let image of images; let i = index;">
     <img class="table-image" [src]="image" [attr.id]="i" />
     <br />
-    <input [ngClass]="!error ? 'normal' : 'error'" class="input1" placeholder="seconds" type="text" [attr.id]="'input' +i" />
+    <input onClick="this.select();" [ngClass]="!error ? 'normal' : 'error'" class="input1" placeholder="seconds" type="text" [attr.id]="'input' +i" />
   </button>
 
 </div>
