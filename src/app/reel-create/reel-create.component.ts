@@ -181,6 +181,7 @@ export class ReelCreateComponent implements OnInit {
   }
 
   onFolderSelected(event: any) {
+    console.log(event.target.files);
     this.files = event.target.files;
     if (event.target.files[0]) {
       var files = event.target.files;

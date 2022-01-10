@@ -27,9 +27,9 @@
   </button>
 </div>
 
-<input accept="image/" #fileSelect type="file" style="display: none;" multiple
+<input onclick="this.value=null;" accept="image/" #fileSelect type="file" style="display: none;" multiple
        (change)="onFileSelected($event)">
-<input accept="image/" #folderSelect type="file" style="display: none;" (change)="onFolderSelected($event)" webkitdirectory multiple />
+<input onclick="this.value=null;" accept="image/" #folderSelect type="file" style="display: none;" (change)="onFolderSelected($event)" webkitdirectory multiple />
 <img src="" id="output" />
 
 
