@@ -23,10 +23,10 @@
 .timer-button {
   background-color: #3f51b5;
   color: white;
-  font-size: 2vh;
   border: none;
   z-index: 5;
   vertical-align: top;
+  font-size: 12.8px;
 }
 .example-button-row {
   display: flex;
@@ -39,8 +39,6 @@
   padding: 1vh;
   border: none;
   z-index: 5;
-  width: 3vh;
-  height: 3vh;
   text-align: center;
  
 }

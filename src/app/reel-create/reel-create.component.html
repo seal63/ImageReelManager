@@ -20,7 +20,7 @@
     Start reel
   </button>
 
-  <input type="text" class="globalInput" id="globalInput" placeholder="global time" />
+  <input type="text" autocomplete="off" class="globalInput" id="globalInput" placeholder="global time" />
 
   <button title="randomize"mat-icon-button [color]="randomizeButton" [ngClass]="isRandom() ? 'unactive' : 'active'" (click)="randomize()">
     <mat-icon>shuffle</mat-icon>
