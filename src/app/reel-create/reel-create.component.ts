@@ -31,6 +31,7 @@ export class ReelCreateComponent implements OnInit {
 
   randomizeButton: ThemePalette;
   error: boolean = false;
+
   constructor(private sanitizer: DomSanitizer,
     private reelManagerService: ReelManagerService,
     private router: Router
@@ -40,7 +41,7 @@ export class ReelCreateComponent implements OnInit {
   ngOnInit(): void {
     let datos = this.reelManagerService.getReelData()
     //If we come back from reel-player
-    if (datos != null) {
+    if (datos.length != 0) {
       let data = this.reelManagerService.getSession();
       this.datosReel = data.datosReel;
       this.fileObjects = data.fileObjects;
@@ -49,26 +50,27 @@ export class ReelCreateComponent implements OnInit {
       this.preparedReel = data.preparedReel;
 
       let subscription: any;
+      //Restores the session waiting so it can access the time inputs
       const sourceSecond = interval(0);
       subscription = sourceSecond.subscribe(val => this.restoreSession(subscription));
-     
     }
+    const source = <HTMLElement>document.getElementById('globalInput');
+    source.addEventListener('input', this.globalInput);
   }
+
   restoreSession(subscription: any) {
      subscription.unsubscribe();
       for (var i = 0; i < this.datosReel.length; i++) {
         var fileNumber = 0;
         var archivo = this.files[0];
+        //Restores the time inputs
         this.datosReel.forEach((f) => {
           if (f.orden == i) {
             var input = <HTMLInputElement>document.getElementById("input" + i.toString());
             input.value = f.segundosImagen.toString();
           }
         });
-
       }
-      const source = <HTMLElement>document.getElementById('globalInput');
-      source.addEventListener('input', this.globalInput);
     }
    
   clearReel() {
@@ -86,7 +88,7 @@ export class ReelCreateComponent implements OnInit {
     }
     for (var i = 0; i < this.fileObjects.length; i++) {
       var input = <HTMLInputElement>document.getElementById("input" + i);
-      if (input.value == "") {
+      if (input.value == "" || isNaN(Number(input.value))) {
         this.error = true;
         return false;
        

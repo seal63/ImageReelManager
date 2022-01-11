@@ -1,4 +1,4 @@
-<div class="example-button-row">
+<div class="button-row">
   <button mat-raised-button color="primary"
           (click)="fileSelect.click()">
     Upload images
@@ -22,7 +22,7 @@
 
   <input type="text" autocomplete="off" class="globalInput" id="globalInput" placeholder="global time" />
 
-  <button title="randomize"mat-icon-button [color]="randomizeButton" [ngClass]="isRandom() ? 'unactive' : 'active'" (click)="randomize()">
+  <button title="randomize"mat-icon-button [color]="randomizeButton" [ngClass]="isRandom() ? 'active' : 'unactive'" (click)="randomize()">
     <mat-icon>shuffle</mat-icon>
   </button>
 </div>

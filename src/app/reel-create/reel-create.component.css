@@ -8,23 +8,27 @@
 }
 .normal{ 
 }
-.active {
+
+.error {
+  border-color: red;
+}
+
+.unactive {
   opacity: 30%;
 }
 
-.unactive{
+.active{
 
 }
-.error{
-   border-color: red;
-}
+
 .input1{
     max-width: 20vh;
 }
 .globalInput{
    margin-left: 1vh;
+
 }
-.example-button-row {
+.button-row {
   display: flex;
   padding: 1vh;
 }
@@ -37,8 +41,4 @@
   width: 5px;
   height: auto;
   display: inline-block;
-}
-
-btn btn-secondary sortable-chosen{
-
 }
