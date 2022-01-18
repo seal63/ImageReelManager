@@ -50,7 +50,7 @@ export class ReelCreateComponent implements OnInit {
       this.preparedReel = data.preparedReel;
 
       let subscription: any;
-      //Restores the session waiting so it can access the time inputs
+      //Waiting so it can access and restore the time inputs
       const sourceSecond = interval(0);
       subscription = sourceSecond.subscribe(val => this.restoreSession(subscription));
     }
@@ -58,12 +58,13 @@ export class ReelCreateComponent implements OnInit {
     source.addEventListener('input', this.globalInput);
   }
 
+//Restores the time inputs
   restoreSession(subscription: any) {
      subscription.unsubscribe();
       for (var i = 0; i < this.datosReel.length; i++) {
         var fileNumber = 0;
         var archivo = this.files[0];
-        //Restores the time inputs
+   
         this.datosReel.forEach((f) => {
           if (f.orden == i) {
             var input = <HTMLInputElement>document.getElementById("input" + i.toString());
@@ -72,7 +73,7 @@ export class ReelCreateComponent implements OnInit {
         });
       }
     }
-   
+  
   clearReel() {
     this.preparedReel = false;
     this.files = [];
@@ -81,7 +82,7 @@ export class ReelCreateComponent implements OnInit {
     this.datosReel = [];
   }
 
-
+  //Checks if the inputs are filled and correct
   formFilled(): boolean {
     if (this.fileObjects.length == 0) {
       return false;
@@ -99,8 +100,6 @@ export class ReelCreateComponent implements OnInit {
 }
 
   startReel() {
-
-    //checks if the time input is not null
     if (!this.formFilled()) {
       return;
     }
@@ -138,8 +137,6 @@ export class ReelCreateComponent implements OnInit {
   saveReel() {
     this.inicializaDatosReel();
     var datosEnviar = [];
-
-
 
     for (var i = 0; i < this.fileObjects.length; i++) {
       var elementoImagen = <HTMLImageElement>document.getElementById(i.toString());
@@ -182,14 +179,6 @@ export class ReelCreateComponent implements OnInit {
     }
   }
 
-  onFolderSelected(event: any) {
-    console.log(event.target.files);
-    this.files = event.target.files;
-    if (event.target.files[0]) {
-      var files = event.target.files;
-      this.generateFileUrls(files);
-    }
-  }
   onFileSelected(event: any) {
     this.files = event.target.files;
     if (event.target.files[0]) {
@@ -205,8 +194,6 @@ export class ReelCreateComponent implements OnInit {
     var stringUrl = URL.createObjectURL(files[i]);
     var url = this.sanitize(stringUrl)
     this.images[number] = url;
-
-
     var sanitizedUrl = <string>this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.bypassSecurityTrustHtml(stringUrl));
 
     let f: FileObject = {
@@ -255,5 +242,9 @@ export class ReelCreateComponent implements OnInit {
       return false;
     }
 
+  }
+
+  goBack() {
+    this.router.navigate(["/menu"]);
   }
 }

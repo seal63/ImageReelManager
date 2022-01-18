@@ -74,13 +74,26 @@ export class ReelPlayerComponent implements OnInit {
       this.icon = "play_arrow"
     }
   }
+
+  goBack() {
+    this.subscription.unsubscribe();
+    this.timerSubscription.unsubscribe();
+
+    this.router.navigate(["/reel-create"]);
+    return;
+  }
   next(){
   this.nextImage();
+  }
+  previous() {
+    this.numeroImagenActual = this.numeroImagenActual - 2;
+    this.nextImage();
   }
   pause() {
     this.paused = true;
     this.timerSubscription.unsubscribe();
     this.subscription.unsubscribe();
+
   }
   resume() {
     this.paused = false;
@@ -90,7 +103,6 @@ export class ReelPlayerComponent implements OnInit {
   }
 
   nextImage() {
-    
     this.subscription.unsubscribe();
     this.timerSubscription.unsubscribe();
     this.numeroImagenActual++;

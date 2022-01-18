@@ -22,22 +22,21 @@
 
   <input type="text" autocomplete="off" class="globalInput" id="globalInput" placeholder="global time" />
 
-  <button title="randomize"mat-icon-button [color]="randomizeButton" [ngClass]="isRandom() ? 'active' : 'unactive'" (click)="randomize()">
+  <button title="randomize" mat-icon-button [color]="randomizeButton" [ngClass]="isRandom() ? 'active' : 'unactive'" (click)="randomize()">
     <mat-icon>shuffle</mat-icon>
   </button>
 </div>
 
 <input onclick="this.value=null;" accept="image/" #fileSelect type="file" style="display: none;" multiple
        (change)="onFileSelected($event)">
-<input onclick="this.value=null;" accept="image/" #folderSelect type="file" style="display: none;" (change)="onFolderSelected($event)" webkitdirectory multiple />
-<img src="" id="output" />
+<input onclick="this.value=null;" accept="image/" #folderSelect type="file" style="display: none;" (change)="onFileSelected($event)" webkitdirectory multiple />
 
 
 
 <div class="btn-group ml-3" [sortablejs]="images">
   <button tabindex="-1" type="button" class="btn btn-secondary" *ngFor="let image of images; let i = index;">
     <img class="table-image" [src]="image" [attr.id]="i" />
-    <br />
+    <br/>
     <input onClick="this.select();" [ngClass]="!error ? 'normal' : 'error'" class="input1" placeholder="seconds" type="text" [attr.id]="'input' +i" />
   </button>
 

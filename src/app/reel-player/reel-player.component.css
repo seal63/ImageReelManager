@@ -7,7 +7,7 @@
 .header {
   position: absolute;
   z-index: 5;
-  width: 20vh;
+  width: 40vh;
   height: 5vh;
   padding: 1vh;
 }
@@ -26,7 +26,7 @@
   border: none;
   z-index: 5;
   vertical-align: top;
-  font-size: 12.8px;
+  font-size: 12.7px;
 }
 .example-button-row {
   display: flex;
