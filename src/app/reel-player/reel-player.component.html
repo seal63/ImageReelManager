@@ -5,10 +5,7 @@
   </button>
   <span class="divider"></span>
 
-  <button class="timer-button">
-    {{remainingTime}}
-  </button>
-  <span class="divider"></span>
+
 
 
   <button class="boton" [disabled]="paused || numeroImagenActual == 0" (click)="previous()" color="primary">
@@ -18,10 +15,16 @@
   <button class="boton" (click)="playButton()" color="primary">
     <mat-icon [inline]="true">{{icon}}</mat-icon>
   </button>
+
   <button class="boton" [disabled]="paused " (click)="next()" color="primary">
     <mat-icon [inline]="true">skip_next</mat-icon>
   </button>
 
+  <span class="divider"></span>
+
+  <button class="timer-button">
+    {{remainingTime}}
+  </button>
 </span>
 
 <div class="example-button-row" *ngIf="!started">

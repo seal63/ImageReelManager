@@ -12,6 +12,9 @@
   padding: 1vh;
 }
 
+.boton {
+  cursor: pointer;
+}
 .timer-header {
   z-index: 5;
   width: 600vh;
