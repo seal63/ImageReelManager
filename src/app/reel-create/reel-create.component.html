@@ -1,28 +1,34 @@
 <div class="button-row">
-  <button mat-raised-button color="primary"
+  <button title="Upload files" mat-icon-button color="primary"
           (click)="fileSelect.click()">
-    Upload images
+    <mat-icon>      add_photo_alternate</mat-icon>
+
   </button>
   <div class="divider"></div>
-  <button mat-raised-button color="primary"
+  <button title="Upload folder" mat-icon-button color="primary"
           (click)="folderSelect.click()">
-    Select Folder
+    <mat-icon>drive_folder_upload </mat-icon>
+</button>
+
+  <div class="divider"></div>
+  <button title="Upload multiple internet urls" mat-icon-button (click)="addInternetUrls()" color="primary">
+    <mat-icon>library_add</mat-icon>
   </button>
 
   <div class="divider"></div>
-  <button title="clear reel" mat-icon-button (click)="clearReel()" color="primary">
+  <button title="Clear reel" mat-icon-button (click)="clearReel()" color="primary">
     <mat-icon>clear</mat-icon>
   </button>
 
   <div class="divider"></div>
 
-  <button mat-raised-button color="primary" (click)="saveReel()">
-    Start reel
+  <button title="Start playing reel" mat-icon-button color="primary" (click)="saveReel()">
+    <mat-icon>play_arrow</mat-icon>
   </button>
 
   <input type="text" autocomplete="off" class="globalInput" id="globalInput" placeholder="global time" />
 
-  <button title="randomize" mat-icon-button [color]="randomizeButton" [ngClass]="isRandom() ? 'active' : 'unactive'" (click)="randomize()">
+  <button title="Randomize image order" mat-icon-button [color]="randomizeButton" [ngClass]="isRandom() ? 'active' : 'unactive'" (click)="randomize()">
     <mat-icon>shuffle</mat-icon>
   </button>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit, SecurityContext } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { DataReel} from '../data-reel';
@@ -8,12 +9,8 @@ import * as $ from 'jquery';
 import { Observable } from 'rxjs';
 import { interval } from 'rxjs';
 import { ThemePalette } from '@angular/material/core';
-
-interface FileObject {
-  url: string;
-  file: number;
-  archivo: File;
-}
+import { FileObject } from '../file-object';
+import { ReelDialogComponent } from '../reel-dialog/reel-dialog.component';
 
 
 @Component({
@@ -34,7 +31,7 @@ export class ReelCreateComponent implements OnInit {
 
   constructor(private sanitizer: DomSanitizer,
     private reelManagerService: ReelManagerService,
-    private router: Router
+    private router: Router, public dialog: MatDialog
   ) { }
  
 
@@ -144,13 +141,23 @@ export class ReelCreateComponent implements OnInit {
 
       var fileNumber = 0;
       var archivo = this.files[0];
+      let url = "";
       this.fileObjects.forEach((f) => {
         if (f.url == elementoImagenUrl) {
-          fileNumber = f.file;
+          fileNumber = f.fileNumber;
           archivo = f.archivo;
+          url = f.url;
         } 
       });
 
+      let local = true;
+
+      if (archivo.name == "empty") {
+        local = false;
+      } else {
+        url = "";
+      }
+      
       var input = <HTMLInputElement>document.getElementById("input" + fileNumber.toString());
       var segundosImagen = parseInt(input.value);
 
@@ -158,10 +165,12 @@ export class ReelCreateComponent implements OnInit {
         archivo: archivo,
         segundosImagen: segundosImagen,
         orden: fileNumber,
+        url: url,
+        local: local
       }
       this.datosReel.splice(i, 1, data);
     }
-    if (this.datosReel.length >= 1) this.preparedReel = true;
+    if (this.datosReel.length > 0) this.preparedReel = true;
 
     this.startReel()
   }
@@ -174,7 +183,9 @@ export class ReelCreateComponent implements OnInit {
       this.datosReel[i] = {
         archivo: file,
         segundosImagen: 0,
-        orden: 0
+        orden: 0,
+        local: true,
+        url: ""
       };
     }
   }
@@ -198,7 +209,7 @@ export class ReelCreateComponent implements OnInit {
 
     let f: FileObject = {
       url: sanitizedUrl,
-      file: this.fileObjects.length,
+      fileNumber: this.fileObjects.length,
       archivo: files[i]
     }
     this.fileObjects.push(f);
@@ -246,5 +257,35 @@ export class ReelCreateComponent implements OnInit {
 
   goBack() {
     this.router.navigate(["/menu"]);
+  }
+
+
+  addInternetUrls() {
+    let dialogRef = this.dialog.open(ReelDialogComponent, {
+      height: '500px',
+      width: '500px',
+    });
+
+
+    dialogRef.afterClosed().subscribe(result => {
+      let internetUrls = result.split('\n');
+
+      if (internetUrls[0] != "") this.joinInternetUrls(internetUrls);;
+    
+    });
+  }
+
+  joinInternetUrls(internetUrls: string[]) {
+    internetUrls.forEach(url => {
+      let f: FileObject = {
+        url: url,
+        fileNumber: this.fileObjects.length,
+        archivo: new File([""], "empty")
+      }
+
+      this.fileObjects.push(f);
+      this.images[this.images.length] = url;
+    });
+    return internetUrls;
   }
 }

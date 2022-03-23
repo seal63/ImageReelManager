@@ -35,14 +35,13 @@ export class ReelPlayerComponent implements OnInit {
 
   ngOnInit(): void {
     this.reelData = this.reelManagerService.getReelData();
-    this.imagenActual = this.sanitize(URL.createObjectURL(this.reelData[0].archivo));
-
-   
+    if (this.reelData[0].local) {
+      this.imagenActual = this.sanitize(URL.createObjectURL(this.reelData[0].archivo));
+    } else {
+      this.imagenActual = this.reelData[0].url;
+    }
+    
   }
-
-  decrease() {
-
-}
 
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
@@ -76,6 +75,7 @@ export class ReelPlayerComponent implements OnInit {
   }
 
   goBack() {
+    this.pause
     this.subscription.unsubscribe();
     this.timerSubscription.unsubscribe();
 
@@ -110,8 +110,14 @@ export class ReelPlayerComponent implements OnInit {
       this.router.navigate(["/reel-create"]);
       return;
     }
-
-    this.imagenActual = this.sanitize(URL.createObjectURL(this.reelData[this.numeroImagenActual].archivo));
+    let imagenDataActual = this.reelData[this.numeroImagenActual]
+    let urlImagenActual;
+    if (imagenDataActual.local) {
+      urlImagenActual = this.sanitize(URL.createObjectURL(imagenDataActual.archivo));
+    } else {
+      urlImagenActual = imagenDataActual.url;
+    }
+    this.imagenActual = urlImagenActual;
     const source = interval(<number>this.reelData[this.numeroImagenActual].segundosImagen * 1000);
 
     this.remainingTime = <number>this.reelData[this.numeroImagenActual].segundosImagen;

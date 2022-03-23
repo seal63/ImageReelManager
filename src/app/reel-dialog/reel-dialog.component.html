@@ -1,0 +1,14 @@
+
+
+<div class="dialog">
+  <div mat-dialog-content>
+    <div>  Write the internet urls separated by line breaks</div>
+    <textarea rows="20" class="area" [(ngModel)]="text"> </textarea>
+  </div>
+
+  <div mat-dialog-actions align="center">
+    <button color="primary" mat-button (click)="cancel()"><mat-icon>close</mat-icon></button>
+    <button color="primary" mat-button (click)="close()"><mat-icon>arrow_forward</mat-icon></button>
+  </div>
+
+</div>

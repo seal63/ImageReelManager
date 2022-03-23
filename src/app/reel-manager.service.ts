@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { DataReel } from './data-reel';
+import { FileObject } from './file-object';
 
-interface FileObject {
-  url: string;
-  file: number;
-  archivo: File;
-}
 
 @Injectable({
   providedIn: 'root'
