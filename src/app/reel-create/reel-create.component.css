@@ -16,17 +16,30 @@
 .unactive {
   opacity: 30%;
 }
-
+.delete-top-div{
+    position:fixed;
+    width: 20vh;
+    text-align: end;
+    height:10%;
+}
 .active{
-
 }
 
+.deleteIcon {
+  background-color: white;
+  border-radius: 50%;
+}
+
+.deleteButton {
+  height: 20px !important;
+  width: 20px !important;
+  position: relative;
+}
 .input1{
     max-width: 20vh;
 }
 .globalInput{
    margin-left: 1vh;
-
 }
 .button-row {
   display: flex;

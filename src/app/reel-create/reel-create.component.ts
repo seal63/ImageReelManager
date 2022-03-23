@@ -140,7 +140,7 @@ export class ReelCreateComponent implements OnInit {
       var elementoImagenUrl = elementoImagen.src;
 
       var fileNumber = 0;
-      var archivo = this.files[0];
+      var archivo = new File([""], "empty");
       let url = "";
       this.fileObjects.forEach((f) => {
         if (f.url == elementoImagenUrl) {
@@ -270,22 +270,45 @@ export class ReelCreateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       let internetUrls = result.split('\n');
 
-      if (internetUrls[0] != "") this.joinInternetUrls(internetUrls);;
+      this.joinInternetUrls(internetUrls);;
     
     });
   }
 
   joinInternetUrls(internetUrls: string[]) {
     internetUrls.forEach(url => {
-      let f: FileObject = {
-        url: url,
-        fileNumber: this.fileObjects.length,
-        archivo: new File([""], "empty")
-      }
 
-      this.fileObjects.push(f);
-      this.images[this.images.length] = url;
+      if (url != "") {
+        let f: FileObject = {
+          url: url,
+          fileNumber: this.fileObjects.length,
+          archivo: new File([""], "empty")
+        }
+
+        this.fileObjects.push(f);
+        this.images[this.images.length] = url;
+      }
+      
     });
     return internetUrls;
+  }
+
+  deleteImage(imagesIndex: number) {
+
+
+    let posicionImagen = 0;
+    for (let i = 0; this.fileObjects.length > i; i++) {
+      let file = this.fileObjects[i];
+      if (file.url == this.images[imagesIndex]) {
+        posicionImagen = i;
+        this.fileObjects.splice(i, 1);
+      }
+    }
+    this.images.splice(imagesIndex, 1);
+    for (let i = posicionImagen; this.fileObjects.length > i; i++) {
+      this.fileObjects[i].fileNumber = this.fileObjects[i].fileNumber - 1;
+    }
+
+   
   }
 }

@@ -7,8 +7,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./reel-dialog.component.css']
 })
 export class ReelDialogComponent{
-
-
   constructor(public dialogRef: MatDialogRef<ReelDialogComponent>) { }
 
   text: string = "";
