@@ -34,6 +34,9 @@ export class ReelPlayerComponent implements OnInit {
   icon: string = "pause";
 
   ngOnInit(): void {
+    this.prepareKeyUpEvents();
+   
+
     this.reelData = this.reelManagerService.getReelData();
     if (this.reelData[0].local) {
       this.imagenActual = this.sanitize(URL.createObjectURL(this.reelData[0].archivo));
@@ -42,7 +45,22 @@ export class ReelPlayerComponent implements OnInit {
     }
     
   }
+  prepareKeyUpEvents() {
+    document.body.onkeyup = (e) => {
+      if (e.key == " " || e.code == "Space" || e.keyCode == 32
+      ) {
+        this.playButton();
+      }
 
+      if (e.code == "Enter" || e.keyCode == 13
+      ) {
+        if (!this.started) {
+          this.start();
+        }
+      }
+
+    }
+  }
   sanitize(url: string) {
     return this.sanitizer.bypassSecurityTrustUrl(url);
   }

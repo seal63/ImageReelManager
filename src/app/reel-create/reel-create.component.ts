@@ -36,6 +36,14 @@ export class ReelCreateComponent implements OnInit {
  
 
   ngOnInit(): void {
+    document.body.onkeyup =(e)=> {
+      if (e.code == "Enter" ||
+        e.keyCode == 13
+      ) {
+        this.saveReel();
+      }
+    }
+
     let datos = this.reelManagerService.getReelData()
     //If we come back from reel-player
     if (datos.length != 0) {
