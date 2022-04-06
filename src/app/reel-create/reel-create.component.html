@@ -39,7 +39,7 @@
 
 
 
-<div class="btn-group ml-3" [sortablejs]="images">
+<div class="div-imagenes" [sortablejs]="images">
   <button tabindex="-1" type="button" class="image-display-button" *ngFor="let image of images; let i = index;">
     <div class="delete-top-div">
       <button class="deleteButton" title="Delete image" mat-icon-button (click)="deleteImage(i)" color="primary">
