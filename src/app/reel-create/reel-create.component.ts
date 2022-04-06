@@ -299,7 +299,13 @@ export class ReelCreateComponent implements OnInit {
     let posicionImagen = 0;
     for (let i = 0; this.fileObjects.length > i; i++) {
       let file = this.fileObjects[i];
-      if (file.url == this.images[imagesIndex]) {
+      let urlImage = "";
+      if (this.images[imagesIndex].changingThisBreaksApplicationSecurity) {
+        urlImage = this.images[imagesIndex].changingThisBreaksApplicationSecurity;
+      } else {
+        urlImage = this.images[imagesIndex];
+      }
+      if (file.url == urlImage) {
         posicionImagen = i;
         this.fileObjects.splice(i, 1);
       }

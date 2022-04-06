@@ -22,7 +22,7 @@
 
   <div class="divider"></div>
 
-  <button title="Start playing reel" mat-icon-button color="primary" (click)="saveReel()">
+  <button (keyup.enter)="saveReel()" title="Start playing reel" mat-icon-button color="primary" (click)="saveReel()">
     <mat-icon>play_arrow</mat-icon>
   </button>
 
@@ -40,7 +40,7 @@
 
 
 <div class="btn-group ml-3" [sortablejs]="images">
-  <button tabindex="-1" type="button" class="btn btn-secondary" *ngFor="let image of images; let i = index;">
+  <button tabindex="-1" type="button" class="image-display-button" *ngFor="let image of images; let i = index;">
     <div class="delete-top-div">
       <button class="deleteButton" title="Delete image" mat-icon-button (click)="deleteImage(i)" color="primary">
         <mat-icon class="deleteIcon">clear</mat-icon>

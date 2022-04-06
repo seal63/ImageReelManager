@@ -13,12 +13,15 @@
   border-color: red;
 }
 
+.image-display-button{
+    padding: 0;
+}
 .unactive {
   opacity: 30%;
 }
 .delete-top-div{
-    position:fixed;
-    width: 20vh;
+    position:sticky;
+    width: 100%;
     text-align: end;
     height:10%;
 }
@@ -26,8 +29,8 @@
 }
 
 .deleteIcon {
+  box-shadow: 0px 0px 1px rgb(34 34 34 / 60%);
   background-color: white;
-  border-radius: 50%;
 }
 
 .deleteButton {
@@ -47,7 +50,8 @@
 }
 
 .mat-icon-button {
-  height: 36px !important;
+  height: 24px !important;
+  width: 24px !important;
   line-height: 0.7;
 }
 .divider {

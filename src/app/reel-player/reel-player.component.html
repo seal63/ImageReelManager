@@ -1,31 +1,24 @@
-<span *ngIf="started" class="header">
+<div *ngIf="started" class="header">
 
-  <button class="boton" (click)="goBack()" color="primary">
-    <mat-icon [inline]="true">arrow_back</mat-icon>
+  <button mat-icon-button class="smaller-button" (click)="goBack()" color="primary">
+    <mat-icon class="smaller-icon">arrow_back</mat-icon>
   </button>
-  <span class="divider"></span>
-
-
-
-
-  <button class="boton" [disabled]="paused || numeroImagenActual == 0" (click)="previous()" color="primary">
-    <mat-icon [inline]="true">skip_previous</mat-icon>
+  <button mat-icon-button class="smaller-button" [disabled]="paused || numeroImagenActual == 0" (click)="previous()" color="primary">
+    <mat-icon class="smaller-icon">skip_previous</mat-icon>
   </button>
 
-  <button class="boton" (click)="playButton()" color="primary">
-    <mat-icon [inline]="true">{{icon}}</mat-icon>
+  <button (keyup.enter)="playButton()" mat-icon-button class="smaller-button" (click)="playButton()" color="primary">
+    <mat-icon class="smaller-icon">{{icon}}</mat-icon>
   </button>
 
-  <button class="boton" [disabled]="paused " (click)="next()" color="primary">
-    <mat-icon [inline]="true">skip_next</mat-icon>
+  <button mat-icon-button class="smaller-button" [disabled]="paused " (click)="next()" color="primary">
+    <mat-icon class="smaller-icon">skip_next</mat-icon>
   </button>
-
-  <span class="divider"></span>
-
-  <button class="timer-button">
+  <button mat-icon-button class="smaller-button-timer" color="primary">
     {{remainingTime}}
   </button>
-</span>
+
+</div>
 
 <div class="example-button-row" *ngIf="!started">
   <button mat-raised-button color="primary"
