@@ -8,4 +8,4 @@ There is an attached a .exe file that allows you to run the program without inst
 
 You can find the files [here](https://github.com/seal63/ImageReelManager/releases/tag/0.2)
 
-![imagen](https://user-images.githubusercontent.com/96264253/148781774-287f0d85-7ccd-438a-a9d0-97b216ccc7a0.png)
+![tutorial-reel](https://user-images.githubusercontent.com/96264253/161964367-c6828264-f32c-42e7-b254-4eaac7f09cac.png)
