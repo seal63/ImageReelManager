@@ -2,7 +2,7 @@ import { Component, OnInit, SecurityContext } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { DataReel} from '../data-reel';
+import { DataReel } from '../data-reel';
 import { ReelManagerService } from '../reel-manager.service';
 import { Router } from '@angular/router';
 import * as $ from 'jquery';
@@ -25,7 +25,7 @@ export class ReelCreateComponent implements OnInit {
   fileObjects: FileObject[] = [];
   files: File[] = [];
   preparedReel: boolean = false;
-
+  dragCounter = 0;
   randomizeButton: ThemePalette;
   error: boolean = false;
 
@@ -33,10 +33,10 @@ export class ReelCreateComponent implements OnInit {
     private reelManagerService: ReelManagerService,
     private router: Router, public dialog: MatDialog
   ) { }
- 
+
 
   ngOnInit(): void {
-    document.body.onkeyup =(e)=> {
+    document.body.onkeyup = (e) => {
       if (e.code == "Enter" ||
         e.keyCode == 13
       ) {
@@ -63,22 +63,22 @@ export class ReelCreateComponent implements OnInit {
     source.addEventListener('input', this.globalInput);
   }
 
-//Restores the time inputs
+  //Restores the time inputs
   restoreSession(subscription: any) {
-     subscription.unsubscribe();
-      for (var i = 0; i < this.datosReel.length; i++) {
-        var fileNumber = 0;
-        var archivo = this.files[0];
-   
-        this.datosReel.forEach((f) => {
-          if (f.orden == i) {
-            var input = <HTMLInputElement>document.getElementById("input" + i.toString());
-            input.value = f.segundosImagen.toString();
-          }
-        });
-      }
+    subscription.unsubscribe();
+    for (var i = 0; i < this.datosReel.length; i++) {
+      var fileNumber = 0;
+      var archivo = this.files[0];
+
+      this.datosReel.forEach((f) => {
+        if (f.orden == i) {
+          var input = <HTMLInputElement>document.getElementById("input" + i.toString());
+          input.value = f.segundosImagen.toString();
+        }
+      });
     }
-  
+  }
+
   clearReel() {
     this.preparedReel = false;
     this.files = [];
@@ -97,12 +97,12 @@ export class ReelCreateComponent implements OnInit {
       if (input.value == "" || isNaN(Number(input.value))) {
         this.error = true;
         return false;
-       
+
       }
     }
     this.error = false;
     return true;
-}
+  }
 
   startReel() {
     if (!this.formFilled()) {
@@ -115,7 +115,7 @@ export class ReelCreateComponent implements OnInit {
       files: this.files,
       preparedReel: this.preparedReel
     }
-    
+
 
     this.reelManagerService.saveSession(data)
     this.reelManagerService.setReelData(this.datosReel);
@@ -129,11 +129,11 @@ export class ReelCreateComponent implements OnInit {
     var l = this.datosReel.length;
     var iterations = 100;
     for (var i = 0; i < iterations; i++) {
-      var randomPosition = Math.floor(Math.random() * (l-1));
-      var saved = this.datosReel[l-1];
+      var randomPosition = Math.floor(Math.random() * (l - 1));
+      var saved = this.datosReel[l - 1];
       var moved = this.datosReel[randomPosition];
-      moved.orden = l-1;
-      this.datosReel[l-1] = moved;
+      moved.orden = l - 1;
+      this.datosReel[l - 1] = moved;
       saved.orden = randomPosition;
       this.datosReel[randomPosition] = saved;
     }
@@ -155,7 +155,7 @@ export class ReelCreateComponent implements OnInit {
           fileNumber = f.fileNumber;
           archivo = f.archivo;
           url = f.url;
-        } 
+        }
       });
 
       let local = true;
@@ -165,11 +165,11 @@ export class ReelCreateComponent implements OnInit {
       } else {
         url = "";
       }
-      
+
       var input = <HTMLInputElement>document.getElementById("input" + fileNumber.toString());
       var segundosImagen = parseInt(input.value);
 
-      var data ={
+      var data = {
         archivo: archivo,
         segundosImagen: segundosImagen,
         orden: fileNumber,
@@ -210,19 +210,19 @@ export class ReelCreateComponent implements OnInit {
   generateFileUrls(files: any) {
     var number = this.images.length;
     for (var i = 0; i < files.length; i++) {
-    var stringUrl = URL.createObjectURL(files[i]);
-    var url = this.sanitize(stringUrl)
-    this.images[number] = url;
-    var sanitizedUrl = <string>this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.bypassSecurityTrustHtml(stringUrl));
+      var stringUrl = URL.createObjectURL(files[i]);
+      var url = this.sanitize(stringUrl)
+      this.images[number] = url;
+      var sanitizedUrl = <string>this.sanitizer.sanitize(SecurityContext.HTML, this.sanitizer.bypassSecurityTrustHtml(stringUrl));
 
-    let f: FileObject = {
-      url: sanitizedUrl,
-      fileNumber: this.fileObjects.length,
-      archivo: files[i]
+      let f: FileObject = {
+        url: sanitizedUrl,
+        fileNumber: this.fileObjects.length,
+        archivo: files[i]
+      }
+      this.fileObjects.push(f);
+      number++;
     }
-    this.fileObjects.push(f);
-    number++;
-  }
   }
 
   sanitize(url: string) {
@@ -250,7 +250,7 @@ export class ReelCreateComponent implements OnInit {
     else {
       this.randomizeButton = 'primary';
     }
-    
+
   }
 
   isRandom() {
@@ -279,7 +279,7 @@ export class ReelCreateComponent implements OnInit {
       let internetUrls = result.split('\n');
 
       this.joinInternetUrls(internetUrls);;
-    
+
     });
   }
 
@@ -296,7 +296,7 @@ export class ReelCreateComponent implements OnInit {
         this.fileObjects.push(f);
         this.images[this.images.length] = url;
       }
-      
+
     });
     return internetUrls;
   }
@@ -323,6 +323,34 @@ export class ReelCreateComponent implements OnInit {
       this.fileObjects[i].fileNumber = this.fileObjects[i].fileNumber - 1;
     }
 
+
+  }
+
+
+  dropHandler(ev: any) {
+    ev.preventDefault();
+    let files = [];
+    if (ev.dataTransfer.items) {
+      for (var i = 0; i < ev.dataTransfer.items.length; i++) {
+        if (ev.dataTransfer.items[i].kind === 'file') {
+          files.push(ev.dataTransfer.items[i].getAsFile());
+        }
+      }
+    }
+    ev.preventDefault();
+    this.generateFileUrls(files);
+  }
+
+  allowDrop(ev: any) {
+    ev.preventDefault();
    
+  }
+
+  removeDragData(ev: any) {
+    if (ev.dataTransfer.items) {
+      ev.dataTransfer.items.clear();
+    } else {
+      ev.dataTransfer.clearData();
+    }
   }
 }

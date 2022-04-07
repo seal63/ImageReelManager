@@ -2,6 +2,13 @@
   display: none;
 }
 
+.drop-zone{
+    height: 100%;
+    width: 100%;
+}
+.on-drop{
+    opacity: 30%;
+}
 .table-image {
   width: 20vh;
   height: 20vh;
@@ -46,6 +53,7 @@
 }
 .globalInput{
    margin-left: 1vh;
+   width: 4.4rem;
 }
 .button-row {
   display: flex;

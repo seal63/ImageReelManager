@@ -16,6 +16,18 @@
   height: 19.2px !important;
   width: 19.2px !important;
 }
+
+  .smaller-button:hover {
+    cursor: pointer;
+    height: 19.2px !important;
+    width: 19.2px !important;
+    opacity:70 !important;
+  }
+
+button:disabled {
+  opacity: 50 !important;
+}
+
 .smaller-button-timer {
   cursor: pointer;
   height: 19.2px !important;
@@ -48,6 +60,7 @@
   border: none;
   z-index: 5;
   vertical-align: middle;
+  cursor: default; 
 }
 .example-button-row {
   display: flex;
@@ -61,15 +74,6 @@
   z-index: 5;
   text-align: center;
  
-}
-.boton {
-  padding: 0;
-  border: 0;
-  vertical-align: top;
-  background-color: white;
-}
-button:disabled {
-  opacity: 50%;
 }
 
 .divImagen {
