@@ -55,8 +55,9 @@ export class ReelCreateComponent implements OnInit {
       startChar = endChar;
       endChar = temporal;
     }
-
-    for (let i = parseInt(startChar); i <= parseInt(endChar); i++) {
+    let startNumber = parseInt(startChar);
+    let endNumber = parseInt(endChar)
+    for (let i = startNumber; i <= endNumber; i++) {
       var input = <HTMLInputElement>document.getElementById("input" + i.toString());
       if (keyCode != 8) {
         input.value = input.value + character;
@@ -75,7 +76,8 @@ export class ReelCreateComponent implements OnInit {
       ) {
         this.saveReel();
       }
-      if (document.getSelection()) {
+      if (document.getSelection() && !document.activeElement) {
+        console.log(document.getSelection());
         e.preventDefault();
           let character = String.fromCharCode(key);
           if (!Number.isNaN(Number(character)) || e.keyCode == 8) {
