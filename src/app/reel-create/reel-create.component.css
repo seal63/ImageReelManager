@@ -1,7 +1,10 @@
 #fileSelect {
   display: none;
 }
-
+#div {
+  border: 1px dotted #000;
+  position: absolute;
+}
 .drop-zone{
     height: 100%;
     width: 100%;

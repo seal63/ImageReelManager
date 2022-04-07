@@ -11,6 +11,7 @@ import { interval } from 'rxjs';
 import { ThemePalette } from '@angular/material/core';
 import { FileObject } from '../file-object';
 import { ReelDialogComponent } from '../reel-dialog/reel-dialog.component';
+import { serializeNodes } from '@angular/compiler/src/i18n/digest';
 
 
 @Component({
@@ -28,20 +29,60 @@ export class ReelCreateComponent implements OnInit {
   dragCounter = 0;
   randomizeButton: ThemePalette;
   error: boolean = false;
-
+  x1 = 0;
+  y1 = 0;
+  x2 = 0;
+  y2 = 0;
   constructor(private sanitizer: DomSanitizer,
     private reelManagerService: ReelManagerService,
     private router: Router, public dialog: MatDialog
   ) { }
 
+  setSelectionOnInputs(character: any, keyCode: any) {
+    var selObj = document.getSelection();
+    let anchorNode = <HTMLElement>selObj?.anchorNode!;
+    let extendNode = <HTMLElement>selObj?.focusNode!;
 
+    const htmlAnchor = anchorNode.innerHTML;
+    const htmlExtend = extendNode.innerHTML;
+
+    let posicionAnchor = htmlAnchor!.indexOf('id=\"input');
+    let posicionExtend = htmlExtend!.indexOf('id=\"input');
+    let startChar = htmlAnchor!.charAt(posicionAnchor + 9);
+    let endChar = htmlExtend!.charAt(posicionExtend + 9);
+    if (parseInt(startChar) > parseInt(endChar)) {
+      let temporal = startChar;
+      startChar = endChar;
+      endChar = temporal;
+    }
+
+    for (let i = parseInt(startChar); i <= parseInt(endChar); i++) {
+      var input = <HTMLInputElement>document.getElementById("input" + i.toString());
+      if (keyCode != 8) {
+        input.value = input.value + character;
+      } else {
+        input.value = input.value.substring(1);
+      }
+    
+    }
+  }
+ 
   ngOnInit(): void {
     document.body.onkeyup = (e) => {
+      let key = e.keyCode;
       if (e.code == "Enter" ||
         e.keyCode == 13
       ) {
         this.saveReel();
       }
+      if (document.getSelection()) {
+        e.preventDefault();
+          let character = String.fromCharCode(key);
+          if (!Number.isNaN(Number(character)) || e.keyCode == 8) {
+            this.setSelectionOnInputs(character, e.keyCode);
+          }
+        }
+      
     }
 
     let datos = this.reelManagerService.getReelData()
