@@ -12,20 +12,49 @@
 .on-drop{
     opacity: 30%;
 }
-.table-image {
-  width: 20vh;
-  height: 20vh;
-}
+
 .normal{ 
 }
-
+clear
 .error {
   border-color: red;
 }
 
-.image-display-button{
-    padding: 0;
+.image-display-button {
+  padding: 0;
+  width: 20vh;
+  height: 20vh;
+  display: inline-block;
+  position:relative;
+  border: 1px solid;
+  margin: 1px;
 }
+
+.table-image-wrapper {
+  height: calc(100% - 1rem);
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.table-image {
+  max-height: 100%;
+  max-width: 100%;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+
+}
+
+.input1 {
+  height: 1rem;
+  max-width: 20vh;
+  box-sizing: border-box;
+}
+
+
 .unactive {
   opacity: 30%;
 }
@@ -43,20 +72,24 @@
   background-color: white;
 }
 
-.div-imagenes{
-    padding-left: 5px;
+.div-imagenes {
+  padding-left: 5px;
 }
 .deleteButton {
   height: 20px !important;
   width: 20px !important;
-  position: relative;
+  position: absolute;
+  right:0;
+  top:0;
 }
-.input1{
-    max-width: 20vh;
-}
-.globalInput{
-   margin-left: 1vh;
-   width: 4.4rem;
+
+.globalInput {
+  margin-left: 1vh;
+  width: 4.4rem;
+
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 .button-row {
   display: flex;

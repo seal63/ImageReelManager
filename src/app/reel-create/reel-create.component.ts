@@ -38,6 +38,14 @@ export class ReelCreateComponent implements OnInit {
     private router: Router, public dialog: MatDialog
   ) { }
 
+  getNumber(firstDigitPosition: number, text: string) {
+    for (let i = firstDigitPosition + 1; i < text.length; i++) {
+      if (text.charAt(i) == '\"') {
+        return text.substring(firstDigitPosition, i);
+      }
+    }
+    return "-1";
+  }
   setSelectionOnInputs(character: any, keyCode: any) {
     var selObj = document.getSelection();
     let anchorNode = <HTMLElement>selObj?.anchorNode!;
@@ -46,17 +54,39 @@ export class ReelCreateComponent implements OnInit {
     const htmlAnchor = anchorNode.innerHTML;
     const htmlExtend = extendNode.innerHTML;
 
-    let posicionAnchor = htmlAnchor!.indexOf('id=\"input');
-    let posicionExtend = htmlExtend!.indexOf('id=\"input');
-    let startChar = htmlAnchor!.charAt(posicionAnchor + 9);
-    let endChar = htmlExtend!.charAt(posicionExtend + 9);
-    if (parseInt(startChar) > parseInt(endChar)) {
-      let temporal = startChar;
-      startChar = endChar;
-      endChar = temporal;
+    let posicionAnchor = htmlAnchor!.indexOf('id=\"input') +9;
+    let posicionExtend = htmlExtend!.indexOf('id=\"input') + 9;
+   //let startChar = htmlAnchor!.charAt(posicionAnchor + 9);
+    //let endChar = htmlExtend!.charAt(posicionExtend + 9);
+
+    if (posicionAnchor == 8) {
+    
+      posicionAnchor = htmlAnchor!.indexOf('id=\"') + 4;
+      //startChar = htmlAnchor!.charAt(posicionAnchor+4);
+      //console.log(startChar);
+    
     }
-    let startNumber = parseInt(startChar);
-    let endNumber = parseInt(endChar)
+    if (posicionExtend == 8) {
+
+      posicionExtend = htmlExtend!.indexOf('id=\"') + 4;
+     // endChar = htmlExtend!.charAt(posicionExtend+4);
+     // console.log(endChar);
+    }
+    let startString = this.getNumber(posicionExtend, htmlExtend!);
+    let endString = this.getNumber(posicionAnchor, htmlAnchor!);
+
+    let startNumber = parseInt(startString);
+    let endNumber = parseInt(endString)
+
+    if (startNumber > endNumber) {
+      let temporal = startString;
+      startString = endString;
+      endString = temporal;
+    }
+
+    startNumber = parseInt(startString);
+    endNumber = parseInt(endString);
+
     for (let i = startNumber; i <= endNumber; i++) {
       var input = <HTMLInputElement>document.getElementById("input" + i.toString());
       if (keyCode != 8) {
@@ -67,7 +97,11 @@ export class ReelCreateComponent implements OnInit {
     
     }
   }
- 
+
+  existsInputFocused() {
+    if (!document.activeElement) return false;
+    return (document.activeElement!.nodeName == "INPUT")
+  }
   ngOnInit(): void {
     document.body.onkeyup = (e) => {
       let key = e.keyCode;
@@ -76,7 +110,7 @@ export class ReelCreateComponent implements OnInit {
       ) {
         this.saveReel();
       }
-      if (document.getSelection() && !document.activeElement) {
+      if (document.getSelection() && !this.existsInputFocused()) {
         console.log(document.getSelection());
         e.preventDefault();
           let character = String.fromCharCode(key);

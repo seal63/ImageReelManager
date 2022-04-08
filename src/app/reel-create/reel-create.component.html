@@ -43,19 +43,18 @@
 
 
   <div class="div-imagenes" [sortablejs]="images">
-    <button tabindex="-1" type="button" class="image-display-button" *ngFor="let image of images; let i = index;">
-      <div class="delete-top-div">
+    <div tabindex="-1" type="button" class="image-display-button" *ngFor="let image of images; let i = index;">
+
         <button class="deleteButton" title="Delete image" mat-icon-button (click)="deleteImage(i)" color="primary">
           <mat-icon class="deleteIcon">clear</mat-icon>
         </button>
 
-      </div>
-
-
-      <img class="table-image" [src]="image" [attr.id]="i" />
-      <br />
+        <div class="table-image-wrapper">
+          <img class="table-image" [src]="image" [attr.id]="i" />
+        </div>
+     
       <input onClick="this.select();" [ngClass]="!error ? 'normal' : 'error'" class="input1" placeholder="seconds" type="text" [attr.id]="'input' +i" />
-    </button>
+    </div>
 
   </div>
 </div>
