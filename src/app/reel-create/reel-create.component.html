@@ -1,6 +1,8 @@
 <div id="div" hidden></div>
 
-<div id="drop-zone" class="drop-zone" (drop)="dropHandler($event)" (dragover)="allowDrop($event)">
+<div id="drop-zone" (mousedown)="mouseDownDropZone($event)" (mouseup)="mouseUpDropZone($event)"
+     class="drop-zone" (drop)="dropHandler($event)" (dragover)="allowDrop($event)">
+  <div id="rectangle-selection"></div>
   <div class="button-row">
     <button title="Upload files" mat-icon-button color="primary"
             (click)="fileSelect.click()">
@@ -42,8 +44,8 @@
 
 
 
-  <div class="div-imagenes" [sortablejs]="images">
-    <div tabindex="-1" type="button" class="image-display-button" *ngFor="let image of images; let i = index;">
+  <div id="div-imagenes"class="div-imagenes" [sortablejs]="images">
+    <div (click)="clickImageDiv($event)"tabindex="-1" type="button" class="image-display-button" *ngFor="let image of images; let i = index;">
 
         <button class="deleteButton" title="Delete image" mat-icon-button (click)="deleteImage(i)" color="primary">
           <mat-icon class="deleteIcon">clear</mat-icon>

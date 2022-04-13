@@ -3,6 +3,7 @@
   overflow-x: hidden;
   overflow-y: hidden;
 
+
 }
 .header {
   position: absolute;
@@ -62,7 +63,8 @@ button:disabled {
   vertical-align: middle;
   cursor: default; 
 }
-.example-button-row {
+.start-button {
+  position: absolute;
   display: flex;
   padding: 1vh;
 }
@@ -81,4 +83,8 @@ button:disabled {
   overflow-x: hidden;
   overflow-y: hidden;
   text-align: center;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  display: flex;
 }

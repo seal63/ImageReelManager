@@ -1,4 +1,4 @@
-import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Component, OnInit, SecurityContext, Renderer2, HostListener, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { SortablejsModule } from 'ngx-sortablejs';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
@@ -29,98 +29,18 @@ export class ReelCreateComponent implements OnInit {
   dragCounter = 0;
   randomizeButton: ThemePalette;
   error: boolean = false;
-  x1 = 0;
-  y1 = 0;
-  x2 = 0;
-  y2 = 0;
+
+  x1 = 0; y1 = 0; x2 = 0; y2 = 0;
+  @ViewChild('selector') selector?: ElementRef;
   constructor(private sanitizer: DomSanitizer,
     private reelManagerService: ReelManagerService,
-    private router: Router, public dialog: MatDialog
+    private router: Router, public dialog: MatDialog,
+    private renderer: Renderer2
   ) { }
 
-  getNumber(firstDigitPosition: number, text: string) {
-    for (let i = firstDigitPosition + 1; i < text.length; i++) {
-      if (text.charAt(i) == '\"') {
-        return text.substring(firstDigitPosition, i);
-      }
-    }
-    return "-1";
-  }
-  setSelectionOnInputs(character: any, keyCode: any) {
-    var selObj = document.getSelection();
-    let anchorNode = <HTMLElement>selObj?.anchorNode!;
-    let extendNode = <HTMLElement>selObj?.focusNode!;
-
-    const htmlAnchor = anchorNode.innerHTML;
-    const htmlExtend = extendNode.innerHTML;
-
-    let posicionAnchor = htmlAnchor!.indexOf('id=\"input') +9;
-    let posicionExtend = htmlExtend!.indexOf('id=\"input') + 9;
-   //let startChar = htmlAnchor!.charAt(posicionAnchor + 9);
-    //let endChar = htmlExtend!.charAt(posicionExtend + 9);
-
-    if (posicionAnchor == 8) {
-    
-      posicionAnchor = htmlAnchor!.indexOf('id=\"') + 4;
-      //startChar = htmlAnchor!.charAt(posicionAnchor+4);
-      //console.log(startChar);
-    
-    }
-    if (posicionExtend == 8) {
-
-      posicionExtend = htmlExtend!.indexOf('id=\"') + 4;
-     // endChar = htmlExtend!.charAt(posicionExtend+4);
-     // console.log(endChar);
-    }
-    let startString = this.getNumber(posicionExtend, htmlExtend!);
-    let endString = this.getNumber(posicionAnchor, htmlAnchor!);
-
-    let startNumber = parseInt(startString);
-    let endNumber = parseInt(endString)
-
-    if (startNumber > endNumber) {
-      let temporal = startString;
-      startString = endString;
-      endString = temporal;
-    }
-
-    startNumber = parseInt(startString);
-    endNumber = parseInt(endString);
-
-    for (let i = startNumber; i <= endNumber; i++) {
-      var input = <HTMLInputElement>document.getElementById("input" + i.toString());
-      if (keyCode != 8) {
-        input.value = input.value + character;
-      } else {
-        input.value = input.value.substring(1);
-      }
-    
-    }
-  }
-
-  existsInputFocused() {
-    if (!document.activeElement) return false;
-    return (document.activeElement!.nodeName == "INPUT")
-  }
+ 
   ngOnInit(): void {
-    document.body.onkeyup = (e) => {
-      let key = e.keyCode;
-      if (e.code == "Enter" ||
-        e.keyCode == 13
-      ) {
-        this.saveReel();
-      }
-      if (document.getSelection() && !this.existsInputFocused()) {
-        console.log(document.getSelection());
-        e.preventDefault();
-          let character = String.fromCharCode(key);
-          if (!Number.isNaN(Number(character)) || e.keyCode == 8) {
-            this.setSelectionOnInputs(character, e.keyCode);
-          }
-        }
-      
-    }
-
+    this.prepareKeyUpEvents();
     let datos = this.reelManagerService.getReelData()
     //If we come back from reel-player
     if (datos.length != 0) {
@@ -134,10 +54,81 @@ export class ReelCreateComponent implements OnInit {
       let subscription: any;
       //Waiting so it can access and restore the time inputs
       const sourceSecond = interval(0);
-      subscription = sourceSecond.subscribe(val => this.restoreSession(subscription));
+      subscription = sourceSecond.subscribe((val: any) => this.restoreSession(subscription));
     }
     const source = <HTMLElement>document.getElementById('globalInput');
     source.addEventListener('input', this.globalInput);
+  }
+  prepareKeyUpEvents() {
+    document.body.onkeyup = (e) => {
+      let key = e.keyCode;
+      if (e.code == "Enter" ||
+        e.keyCode == 13
+      ) {
+        this.saveReel();
+      }
+      if (document.getSelection() && !this.existsInputFocused()) {
+        e.preventDefault();
+        let character = String.fromCharCode(key);
+        if (!Number.isNaN(Number(character)) || e.keyCode == 8) {
+          this.setSelectionOnInputs(character, e.keyCode);
+        }
+      }
+    }
+  }
+  getNumber(firstDigitPosition: number, text: string) {
+    for (let i = firstDigitPosition + 1; i < text.length; i++) {
+      if (text.charAt(i) == '\"') {
+        return text.substring(firstDigitPosition, i);
+      }
+    }
+    return "-1";
+  }
+  setSelectionOnInputs(character: any, keyCode: any) {
+    var selObj = document.getSelection();
+
+    const htmlAnchor = (<HTMLElement>selObj?.anchorNode!).innerHTML;
+    const htmlExtend = (<HTMLElement>selObj?.focusNode!).innerHTML;
+
+    let posicionAnchor = htmlAnchor!.indexOf('id=\"input') + 9;
+    let posicionExtend = htmlExtend!.indexOf('id=\"input') + 9;
+
+    if (posicionAnchor == 8)
+      posicionAnchor = htmlAnchor!.indexOf('id=\"') + 4;
+
+    if (posicionExtend == 8)
+      posicionExtend = htmlExtend!.indexOf('id=\"') + 4;
+
+    let startString = this.getNumber(posicionExtend, htmlExtend!);
+    let endString = this.getNumber(posicionAnchor, htmlAnchor!);
+
+    if (parseInt(startString) > parseInt(endString)) {
+      let temporal = startString;
+      startString = endString;
+      endString = temporal;
+    }
+
+
+    let startNumber = parseInt(startString);
+    let endNumber = parseInt(endString);
+
+    for (let i = startNumber; i <= endNumber; i++) {
+      var input = <HTMLInputElement>document.getElementById("input" + i.toString());
+      if (!input.value) {
+        input.value = "";
+      }
+      if (keyCode != 8) {
+        input.value = input.value + character;
+      } else {
+        input.value = input.value.substring(0, input.value.length - 1);
+      }
+
+    }
+  }
+
+  existsInputFocused() {
+    if (!document.activeElement) return false;
+    return (document.activeElement!.nodeName == "INPUT")
   }
 
   //Restores the time inputs
@@ -243,7 +234,7 @@ export class ReelCreateComponent implements OnInit {
         url = "";
       }
 
-      var input = <HTMLInputElement>document.getElementById("input" + fileNumber.toString());
+      var input = <HTMLInputElement>document.getElementById("input" + i.toString());
       var segundosImagen = parseInt(input.value);
 
       var data = {
@@ -353,10 +344,11 @@ export class ReelCreateComponent implements OnInit {
 
 
     dialogRef.afterClosed().subscribe(result => {
+      if (result) {
       let internetUrls = result.split('\n');
 
       this.joinInternetUrls(internetUrls);;
-
+      }
     });
   }
 
@@ -402,8 +394,6 @@ export class ReelCreateComponent implements OnInit {
 
 
   }
-
-
   dropHandler(ev: any) {
     ev.preventDefault();
     let files = [];
@@ -429,5 +419,69 @@ export class ReelCreateComponent implements OnInit {
     } else {
       ev.dataTransfer.clearData();
     }
+  }
+
+  mouseUpDropZone(e: any) {
+    let rectangle = document.getElementById("rectangle-selection")!;
+    rectangle.style.visibility = "hidden";
+  }
+
+  mouseDownDropZone(e: any) {
+    
+    if (!$(e.target).closest('#div-imagenes').length) {
+
+      let s = window.getSelection()!;
+      if (s.rangeCount >= 1) {
+        for (var i = 0; i < s.rangeCount; i++) {
+          s.removeRange(s.getRangeAt(i));
+        }
+      }
+
+
+      this.x1 = e.clientX;
+      this.y1 = e.clientY;
+      let rectangle = document.getElementById("rectangle-selection")!;
+      rectangle.style.top = this.y1.toString() + 'px';
+      rectangle.style.left = this.x1.toString() + 'px';
+
+      rectangle.style.height = '0px';
+      rectangle.style.width = '0px';
+
+      rectangle.style.visibility = "visible";
+    }
+   
+  }
+  clickImageDiv(ev: any) {
+    ev.stopPropagation();
+  }
+
+
+  @HostListener('document:mousemove', ['$event'])
+  onMouseMove(e: any) {
+    let rectangle = document.getElementById("rectangle-selection")!;
+
+    let offsetX = this.x1 - e.clientX;
+    let offsetY = this.y1 - e.clientY;
+
+    let translateY = '0px';
+    let translateX = '0px';
+    if (offsetY > 0) {
+      translateY = (offsetY * (-1)).toString() + 'px';
+    } 
+  
+    if (offsetX > 0) {
+      translateX = (offsetX * (-1)).toString() + 'px';
+    }
+
+    rectangle.style.transform = 'translate(' + translateX + ', ' + translateY + ')'
+    let width = (Math.abs(offsetX)).toString();
+    rectangle.style.width = width + 'px';
+    let height = (Math.abs(offsetY)).toString();
+    rectangle.style.height = height + 'px';
+
+  }
+
+  reCalc() {
+   
   }
 }
