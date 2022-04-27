@@ -29,6 +29,7 @@ export class ReelCreateComponent implements OnInit {
   dragCounter = 0;
   randomizeButton: ThemePalette;
   error: boolean = false;
+  ctrlPressed: boolean = false;
 
   x1 = 0; y1 = 0; x2 = 0; y2 = 0;
   @ViewChild('selector') selector?: ElementRef;
@@ -59,9 +60,17 @@ export class ReelCreateComponent implements OnInit {
     const source = <HTMLElement>document.getElementById('globalInput');
     source.addEventListener('input', this.globalInput);
   }
+
   prepareKeyUpEvents() {
+    document.body.onkeydown = (e) => {
+      if (e.ctrlKey) {
+        this.ctrlPressed = true;
+      }
+    }
     document.body.onkeyup = (e) => {
+      this.ctrlPressed = false;
       let key = e.keyCode;
+      
       if (e.code == "Enter" ||
         e.keyCode == 13
       ) {
@@ -427,17 +436,16 @@ export class ReelCreateComponent implements OnInit {
   }
 
   mouseDownDropZone(e: any) {
-    
+    if (this.ctrlPressed) {
+      return;
+    }
     if (!$(e.target).closest('#div-imagenes').length) {
-
       let s = window.getSelection()!;
       if (s.rangeCount >= 1) {
         for (var i = 0; i < s.rangeCount; i++) {
           s.removeRange(s.getRangeAt(i));
         }
       }
-
-
       this.x1 = e.clientX;
       this.y1 = e.clientY;
       let rectangle = document.getElementById("rectangle-selection")!;

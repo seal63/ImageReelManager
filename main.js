@@ -2,6 +2,9 @@ const { app, BrowserWindow } = require("electron");
 
 let appWin;
 
+
+
+
 /**
 createWindow = () => {
     appWin = new BrowserWindow({
