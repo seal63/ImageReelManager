@@ -8,6 +8,12 @@ There is an attached a .exe file that allows you to run the program without inst
 
 You can find the files [here](https://github.com/seal63/ImageReelManager/releases)
 
+Shortcuts:
+TAB : TOGGLE BORDERLESS WINDOW
+CTR + LEFT CLICK: DRAG WINDOW ON BORDERLESS
+CTRL + SPACE: TOGGLE WINDOW ALWAYS ON TOP
+DOUBLE LEFT CLICK: FULLSCREEN
+
 ![tutorial-reel](https://user-images.githubusercontent.com/96264253/161964367-c6828264-f32c-42e7-b254-4eaac7f09cac.png)
 
 ![moving-images](https://gyazo.com/b95165de8c035d37516239691cae6abb.gif)
